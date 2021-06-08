@@ -1,30 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import {AuthProvider} from './Config/Context/AuthContext'
+import {useReducer} from 'react'
+import initialState from './Config/Context/Store'
+import Reducer from './Config/Context/Reducer'
 
-function App() {
+// PAGES
+import {
+    Home,
+    Login,
+    Register,
+    Admin,
+    Product,
+    Categories
+} from './Pages'
 
-  fetch('https://psb.marifatussalaam.org/home/kuotaPsb')
-  .then(response => response.json())
-  .then(result => console.log(result))
+// ROUTER
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+
+    const [store,
+        setStore] = useReducer(Reducer, initialState)
+
+    return (
+        <Router>
+            <AuthProvider
+                value={{
+                store,
+                setStore
+            }}>
+                <Switch>
+                    <Route path="/admin/product/categories">
+                        <Categories/>
+                    </Route>
+                    <Route path="/admin/product">
+                        <Product/>
+                    </Route>
+                    <Route path="/admin">
+                        <Admin/>
+                    </Route>
+                    <Route path="/register">
+                        <Register/>
+                    </Route>
+                    <Route path="/login">
+                        <Login/>
+                    </Route>
+                    <Route path="/">
+                        <Home/>
+                    </Route>
+                </Switch>
+            </AuthProvider>
+        </Router>
+    )
 }
-
-export default App;
