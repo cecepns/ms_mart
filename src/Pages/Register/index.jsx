@@ -1,7 +1,8 @@
 import styles from './Register.module.scss'
-import firebase from '../../Config/Firebase'
-import {Link, Redirect, useHistory} from 'react-router-dom'
+// import firebase from '../../Config/Firebase'
+import {Link, useHistory} from 'react-router-dom'
 import {useState} from 'react'
+import { auth } from '../../Config/Firebase';
 
 export default function Register() {
     let history = useHistory();
@@ -16,23 +17,17 @@ export default function Register() {
             return alert('data tidak boleh kosong')
         }
 
-        firebase
-            .auth()
+        auth
             .createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                // Signed in
-                var user = userCredential.user;
                 alert('akun berhasil didaftarkan')
                 setTimeout(() => {
                     history.push("/login");
                 }, 2000);
-                // ...
             })
             .catch((error) => {
-                var errorCode = error.code;
                 var errorMessage = error.message;
                 alert(errorMessage)
-                // ..
             });
 
     }
@@ -48,7 +43,7 @@ export default function Register() {
                     placeholder="masukan email"
                     onChange={e => setEmail(e.target.value)}/>
                 <input
-                    type="text"
+                    type="password"
                     placeholder="masukan password"
                     onChange={e => setPassword(e.target.value)}/>
                 <div className={styles['wrapper__button']}>

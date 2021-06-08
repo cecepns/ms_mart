@@ -33,7 +33,6 @@ export default function Login() {
                 // ...
             })
             .catch((error) => {
-                var errorCode = error.code;
                 var errorMessage = error.message;
                 console.log(error)
                 alert('error ' + errorMessage)
@@ -53,7 +52,7 @@ export default function Login() {
                     placeholder="masukan email"
                     onChange={e => setEmail(e.target.value)}/>
                 <input
-                    type="text"
+                    type="password"
                     placeholder="masukan password"
                     onChange={e => setPassword(e.target.value)}/>
                 <div className={styles['wrapper__button']}>
