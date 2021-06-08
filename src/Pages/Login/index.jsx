@@ -2,9 +2,7 @@ import {auth} from '../../Config/Firebase'
 import {useState, useContext, useReducer} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import AuthContext from '../../Config/Context/AuthContext'
-import initialState from '../../Config/Context/Store'
 import styles from './Login.module.scss'
-import Reducer from '../../Config/Context/Reducer'
 
 
 
