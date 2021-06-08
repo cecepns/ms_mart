@@ -4,8 +4,6 @@ import {Link, useHistory} from 'react-router-dom'
 import AuthContext from '../../Config/Context/AuthContext'
 import styles from './Login.module.scss'
 
-
-
 export default function Login() {
     let history = useHistory();
 
@@ -16,27 +14,28 @@ export default function Login() {
     const [password,
         setPassword] = useState('');
 
+    const [loading,
+        setLoading] = useState(false)
+
     const handleSubmit = () => {
+        setLoading(true)
         auth
             .signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                // Signed in
-                var user = userCredential.user;
-                console.log(user)
+                setLoading(false)
                 alert('berhasil login')
-                setStore({type:'login', role:'admin'})
+                console.log(userCredential)
+                setStore({type: 'login', role: 'admin'})
                 localStorage.setItem("loggedIn", true);
                 setTimeout(() => {
                     history.push("/admin");
                 }, 2000);
-
-                // ...
             })
             .catch((error) => {
                 var errorMessage = error.message;
                 console.log(error)
                 alert('error ' + errorMessage)
-                // ..
+                setLoading(false)
             });
 
     }
@@ -58,7 +57,9 @@ export default function Login() {
                 <div className={styles['wrapper__button']}>
 
                     <button className={styles['btn-login']} onClick={handleSubmit}>
-                        Login
+                        {loading
+                            ? "Loading..."
+                            : "Login"}
                     </button>
 
                     <span className={styles['register']}>

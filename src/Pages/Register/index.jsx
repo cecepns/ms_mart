@@ -2,7 +2,7 @@ import styles from './Register.module.scss'
 // import firebase from '../../Config/Firebase'
 import {Link, useHistory} from 'react-router-dom'
 import {useState} from 'react'
-import { auth } from '../../Config/Firebase';
+import {auth} from '../../Config/Firebase';
 
 export default function Register() {
     let history = useHistory();
@@ -12,20 +12,28 @@ export default function Register() {
     const [password,
         setPassword] = useState('');
 
+    const [loading,
+        setLoading] = useState(false)
+
     const handleRegister = () => {
         if (email.length < 1 || password.length < 1) {
             return alert('data tidak boleh kosong')
         }
 
+        setLoading(true)
+
         auth
             .createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
+                setLoading(false)
                 alert('akun berhasil didaftarkan')
+                console.log(userCredential)
                 setTimeout(() => {
                     history.push("/login");
-                }, 2000);
+                }, 1200);
             })
             .catch((error) => {
+                setLoading(false)
                 var errorMessage = error.message;
                 alert(errorMessage)
             });
@@ -49,7 +57,9 @@ export default function Register() {
                 <div className={styles['wrapper__button']}>
 
                     <button className={styles['btn-register']} onClick={handleRegister}>
-                        Daftar
+                        {loading
+                            ? "Loading..."
+                            : "Register"}
                     </button>
 
                     <span className={styles['register']}>
