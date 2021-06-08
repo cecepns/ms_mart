@@ -1,10 +1,17 @@
 import {auth} from '../../Config/Firebase'
-import {useState} from 'react'
+import {useState, useContext, useReducer} from 'react'
 import {Link, useHistory} from 'react-router-dom'
+import AuthContext from '../../Config/Context/AuthContext'
+import initialState from '../../Config/Context/Store'
 import styles from './Login.module.scss'
+import Reducer from '../../Config/Context/Reducer'
+
+
 
 export default function Login() {
     let history = useHistory();
+
+    const {setStore} = useContext(AuthContext)
 
     const [email,
         setEmail] = useState('');
@@ -19,6 +26,7 @@ export default function Login() {
                 var user = userCredential.user;
                 console.log(user)
                 alert('berhasil login')
+                setStore({type:'login', role:'admin'})
                 localStorage.setItem("loggedIn", true);
                 setTimeout(() => {
                     history.push("/admin");
