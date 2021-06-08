@@ -1,5 +1,5 @@
 import {auth} from '../../Config/Firebase'
-import {useState, useContext, useReducer} from 'react'
+import {useState, useContext} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import AuthContext from '../../Config/Context/AuthContext'
 import styles from './Login.module.scss'

@@ -1,5 +1,4 @@
-import React, {useContext} from 'react'
-import {Redirect} from 'react-router-dom'
+import React from 'react'
 
 import styles from '../../Admin.module.scss'
 import Navbar from '../../Partials/Navbar'
